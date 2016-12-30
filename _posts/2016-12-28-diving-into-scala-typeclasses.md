@@ -6,10 +6,10 @@ categories: scala
 
 
 Typeclasses are one of the most beautiful ways of extending existing classes and building new features and functionality over them. 
-It is always considered a good practise to evolve programs/systems be extending them and not altering them. 
+It is always considered a good practise to evolve programs/systems by extending and not altering them. 
 There are also situations where you can't change the classes. Typeclasses come to our rescue in such cases.
 
-Typeclasses are a feature in both Haskell and Scala. Haskell provides typeclasses as a language feature and its usecase is similar to that of achieving polymorphism(ad-hoc polymorphism). Many claim that typeclasses in scala are way more powerful because being an OO language with a very strong polymorphism through subtyping, it can combine typeclasses can to add specialized functionality to this inheritance chain. Nope, you can't do that with typeclasses. In other words, typclasses are not like interfaces. And we will discuss why I believe so in this blog post. 
+Typeclasses are a feature in both Haskell and Scala. Haskell provides it as a language feature and its usecase is to achieve polymorphism(ad-hoc polymorphism). Many claim that typeclasses in scala are way more powerful because being an OO language with a very strong polymorphism through subtyping, it can combine typeclasses to add specialized functionality to this inheritance chain. Nope, you can't do that with typeclasses. In other words, typclasses are not like interfaces. And we will discuss why I believe so in this blog post. 
 
 *Inheritance* is one of the key features of Object oriented programming to add new functionality. However, if we want to add new features to classes that we can't extend, we generally follow one of the following methods.  
 Let us assume we need to a write a logger that prints a given variable along with its type.  
@@ -78,7 +78,7 @@ import scala.concurrent.duration._
 {% endhighlight %}
 Yes, that is also achieved using implicit conversions.
 
-So many examples of typeclasses try to solve the same using typeclasses, 
+Let's solve the same using typeclasses, 
 {% highlight scala %}
 object TypeLogger3 {
   trait Loggable[T] {
@@ -103,10 +103,10 @@ import TypeLogger3._
 1.log
 1.01.log
 {% endhighlight %}
-You can clearly see that you could achieve the same with implicits. What special does typeclass do here?
+You can clearly see that you could achieve the same with implicits. What special is achieved by using typeclass then?
 
 Another wrong assumption is that typeclasses can be used to add specialized functionality to inheritance chain which is partly true but not exactly the way one would think regular subtyping in inheritance works.
-Let us take an example of the AnimalKingdom now,
+Let us take an example of the AnimalKingdom,
 {% highlight scala %}
 object AnimalKingdom {
   trait LivingBeing
@@ -158,9 +158,9 @@ def main(args: Array[String]): Unit = {
   println(cat.makeNoise)
 }
 {% endhighlight %}
-This seems to work, cause we know the dog is of type Dog, cat is of type Cat, and the compiler can pick the CanMakeSound[Dog] and CanMakeSound[Cat]. However, we are actually explicitly providing the subclass Type, which defeats the entire purpose of inheritance of object-oriented programming.
+This seems to work, cause we know the dog is of type Dog, cat is of type Cat, and the compiler can pick the `CanMakeSound[Dog]` and `CanMakeSound[Cat]`. However, we are actually explicitly providing the subclass Type, which defeats the entire purpose of inheritance of object-oriented programming.
 
-From the above, I dont meant that typeclassess aren't useful in scala. Typeclasses are definitely useful but not in ways we generally think of polymorphism in OOPS. Taking the same AnimalKingdom example, we can add few powers to the new God.
+From the above, I don't meant that typeclassess aren't useful in scala. Typeclasses are definitely useful but not in ways we generally think of polymorphism in OOPS. Taking the same AnimalKingdom example, we can add few powers to the new God.
 {% highlight scala %}
 object SleepImplicits {
   import AnimalKingdom.LivingBeing
@@ -189,8 +189,8 @@ object God {
   }
 }
 {% endhighlight %}
-This works, cause you have an sleep implementation available for all livingbeings. So, the new God can put all the animals to sleep.
-One classic example from scala library is
+This works, cause you have an sleep implementation available for all livingbeings. So, the new God can put all the animals to sleep.  
+Another classic example from scala library is
 {% highlight scala %}
 def sorted[B >: A](implicit ord: Ordering[B]): Seq[A]
 {% endhighlight %}
@@ -198,4 +198,4 @@ def sorted[B >: A](implicit ord: Ordering[B]): Seq[A]
 Ordering is used to resolve the relative ordering between two items of type A.
 
 `Ordering[B]` is a typeclass here. Different implementations of compare function are available as implicits in the scope of the sorted method call.
-B >: A means B is a supertype of A. Thus if you provide an Ordering of Numbers and Int extends Numbers, meant you could sort a List of Int(s).
+`B >: A` means B is a supertype of A. Thus if you provide an Ordering of Numbers and Int extends Numbers, meant you could sort a List of Int(s).

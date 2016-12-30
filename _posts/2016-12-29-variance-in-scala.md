@@ -121,16 +121,16 @@ case class Basket[+T](item: T) {
   def makeJam(recipe: T => Jam) = recipe(item)
 }
 {% endhighlight %}
-So, in order to achieve function subtyping, we saw that arg(A) was contravariant.
+So, in order to achieve function subtyping, we saw that arg was contravariant `[A-]`.
 However, in the context of `Basket[+T]`, T is covariant. Thus, the error.
 
 There is another type of variance called Invariance which means the container is neither covariant nor contravariant. 
-Most of the classes that we create are generally Invariant.
+This is the default type of Variance and most of the classes that we create are generally Invariant.
 
 So, we saw about the three types of variance in Scala and how to identify them in your problem space.
-If A extends B, and  
-1. Container[A] could be substituted for Container[B], then the Container is covariant.  
-2. Container[B] could be substituted for Container[A],  then the Container is contravariant.  
+If `A extends B`, and  
+1. `Container[A]` could be substituted for `Container[B]`, then the Container is covariant.  
+2. `Container[B]` could be substituted for `Container[A]`,  then the Container is contravariant.  
 3. Else, if neither relation is maintained, then it is invariant.  
  
 Variance is an idea borrowed from the mathematics field of Category Theory.
