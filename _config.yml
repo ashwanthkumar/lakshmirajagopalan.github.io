@@ -10,7 +10,7 @@ title: "My dedicated attempts at blogging"
 title-font-size: '0.1em' # a provision to adjust the size of your title. If it is too long then do resize to a smaller value. By default it will be 4em.
 
 email: lakshmi.srajagopalan@gmail.com
-description: My blog
+description: "Simple Scala"
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://lakshmirajagopalan.github.io" # the base hostname & protocol for your site
 
@@ -31,7 +31,7 @@ disqus-shortname: lakshmirajagopalan
 
 # Contact form
 # Go to https://getsimpleform.com and get a API token by signing up with your email and enter that here
-api-token:   
+api-token:
 
 #CSS
 sass:

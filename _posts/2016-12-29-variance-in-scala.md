@@ -112,19 +112,19 @@ aBasket.makeJam(fruitJamRecipe) //passes
 aBasket.makeJam(fujiAppleJamRecipe) //compile fails
 {% endhighlight %}
 
-This is exactly why the argument in Function1 was contravariant[-A]. If someone expects, a function from `Apple => Jam`, it should be possible to pass `Fruit => Jam`, but not `FujiApple => Jam`.
+This is exactly why the argument in Function1 was contravariant[-A]. If someone expects, a function from `Apple => Jam`, it should be possible to pass `Fruit => Jam`, but not `FujiApple => Jam`. A and supertypes of A could be passed.
 In Function1, the return value type should be covariant `R+`, because we expect to access some members/features of the returned value, which means that it should be (oe extend) R.
 
 Lets get back to the cryptic error of covariant in contravariant position.
 {% highlight scala %}
 case class Basket[+T](item: T) {
-  def makeJam(recipe: T => Jam) = recipe(item)
+  def replace(another: T): Basket[T] = this.copy(item=another) //compile fails
 }
 {% endhighlight %}
 So, in order to achieve function subtyping, we saw that arg was contravariant `[A-]`.
 However, in the context of `Basket[+T]`, T is covariant. Thus, the error.
 
-There is another type of variance called Invariance which means the container is neither covariant nor contravariant. 
+There is another type of variance called Invariance which means the container is neither covariant nor contravariant.
 This is the default type of Variance and most of the classes that we create are generally Invariant.
 
 So, we saw about the three types of variance in Scala and how to identify them in your problem space.
@@ -132,6 +132,6 @@ If `A extends B`, and
 1. `Container[A]` could be substituted for `Container[B]`, then the Container is covariant.  
 2. `Container[B]` could be substituted for `Container[A]`,  then the Container is contravariant.  
 3. Else, if neither relation is maintained, then it is invariant.  
- 
+
 Variance is an idea borrowed from the mathematics field of Category Theory.
 We would talk more about that in the subsequent post.
