@@ -113,7 +113,7 @@ aBasket.makeJam(fujiAppleJamRecipe) //compile fails
 {% endhighlight %}
 
 This is exactly why the argument in Function1 was contravariant[-A]. If someone expects, a function from `Apple => Jam`, it should be possible to pass `Fruit => Jam`, but not `FujiApple => Jam`. A and supertypes of A could be passed.
-In Function1, the return value type should be covariant `R+`, because we expect to access some members/features of the returned value, which means that it should be (oe extend) R.
+In Function1, the return value type should be covariant `+R`, because we expect to access some members/features of the returned value, which means that it should be (or extend) R.
 
 Lets get back to the cryptic error of covariant in contravariant position.
 {% highlight scala %}
